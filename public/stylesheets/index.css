@@ -1,0 +1,8 @@
+.dark-mode {
+  color: white !important;
+  background-color: black !important;
+}
+
+.indicator-img {
+  max-height: 20px;
+}

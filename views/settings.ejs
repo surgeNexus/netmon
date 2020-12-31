@@ -1,0 +1,88 @@
+<%- include('./partials/header') %>
+
+<div class="container">
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+              <label class="form-check-label" for="flexSwitchCheckChecked">Dark Mode</label>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col">
+            <div class="d-flex justify-content-center">
+                <div class="card card-body" style="width: 18rem;">
+                    <form action="/settings" method="POST">
+                      <div class="text-center">
+                        <h3>New Block</h3>
+                        <div>
+                            <label for="">Block Name</label>
+                            <div>
+                                <input type="text" name="name" value="">
+                            </div>
+                        </div>
+                        <div>
+                            <br>
+                            <button class="btn btn-small btn-primary" type="submit">Add Block</button>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% blocks.forEach((block) => { %>
+    <div class="row">
+        <div class="col">
+            <br>
+            <div class="card">
+                <div class="card-header text-center">
+                  <%= block.name %>
+                </div>
+                <div class="card-body">
+                    <table class="table text-center">
+                          
+                        <tr>
+                          <th scope="col">Resource Name</th>
+                          <th scope="col">IP Address</th>
+                          <th scope="col">Edit / Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <form action="/settings/<%= block.id %>" method="POST">
+                            <th>
+                              <input type="text" name="name" value="">
+                            </th>
+                            <th>
+                              <input type="text" name="ip" value="">
+                            </th>
+                            <th class="">
+                              <button class="btn btn-small btn-primary" type="submit">Submit</button>
+                            </th>
+                          </form>
+                        </tr>
+                        <% block.servers.forEach((server) => { %>
+                            <tr>
+                              <td><%= block.servers.name %></td>
+                              <td><%= block.servers.ip %></td>
+                              <td>
+                                edit / delete
+                              </td>
+                            </tr>
+                        <% }) %>
+                      </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% }) %>
+</div>
+
+<%- include('./partials/header') %>
