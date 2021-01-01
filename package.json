@@ -9,6 +9,8 @@
   "author": "Jordan G Webb",
   "license": "ISC",
   "dependencies": {
+    "ajax": "0.0.4",
+    "async": "^3.2.0",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.5.3",
     "connect-flash": "^0.1.1",
@@ -19,6 +21,7 @@
     "moment": "^2.29.1",
     "mongoose": "^5.11.9",
     "nodemailer": "^6.4.17",
+    "ping-wrapper": "0.0.3",
     "socket.io": "^3.0.4"
   }
 }

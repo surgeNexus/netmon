@@ -1,4 +1,4 @@
-<%- include('./partials/header') %>
+<%- include('../partials/header') %>
 
 <div class="container">
     <br>
@@ -50,7 +50,7 @@
                         <tr>
                           <th scope="col">Resource Name</th>
                           <th scope="col">IP Address</th>
-                          <th scope="col">Edit / Delete</th>
+                          <th scope="col">Remove</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -69,10 +69,12 @@
                         </tr>
                         <% block.servers.forEach((server) => { %>
                             <tr>
-                              <td><%= block.servers.name %></td>
-                              <td><%= block.servers.ip %></td>
+                              <td><%= server.name %></td>
+                              <td><%= server.ip %></td>
                               <td>
-                                edit / delete
+                                <form action="/settings/<%= server.id %>?_method=DELETE" method="POST">
+                                  <button type="submit" class="btn btn-sm btn-danger">Remove Resource</button>
+                                </form>
                               </td>
                             </tr>
                         <% }) %>
@@ -85,4 +87,4 @@
     <% }) %>
 </div>
 
-<%- include('./partials/header') %>
+<%- include('../partials/header') %>

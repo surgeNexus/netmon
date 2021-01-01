@@ -1,15 +1,30 @@
 const express = require('express');
 const router = express.Router();
+const Ping = require('ping-wrapper');
 const Block = require('../models/Block');
 const Server = require('../models/Server');
 
-router.get('/', (req, res) => {
-    Block.find({}).populate('servers').exec((err, foundBlocks) => {
+function pinger(server, callback){
+    const ip = server.ip;
+    var sys = require('util')
+    var pinger = require('child_process').exec;
+    function puts(error, stdout, stderr) { 
+        if(stdout.includes('64 bytes')){
+            return callback(stdout);
+        } else {
+            console.log('No Hit')
+        }
+    }
+    pinger(`ping -c 3 ${ip}`, puts);
+}
+
+router.get('/', async (req, res) => {
+    Block.find({}).populate('servers').exec(async(err, foundBlocks) => {
         if(err){
             req.flash('error', 'Block not found. Please try again.');
             res.redirect('back');
         } else {
-            res.render('settings', {
+            res.render('settings/index', {
                 blocks: foundBlocks
             });
         }
@@ -49,7 +64,18 @@ router.post('/:id', (req, res) => {
                     foundBlock.save();
                     res.redirect('/settings');
                 }
-            })
+            });
+        }
+    });
+});
+
+router.delete('/:id', (req, res) => {
+    Server.findByIdAndDelete(req.params.id, (err) => {
+        if(err){
+            req.flash('error', 'Resource not removed. Please try again.');
+            res.redirect('back');
+        } else {
+            res.redirect('/settings');
         }
     });
 });

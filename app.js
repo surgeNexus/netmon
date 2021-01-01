@@ -27,5 +27,5 @@ app.use('/', indexRoutes);
 app.use('/settings', settingsRoutes);
 
 app.listen(process.env.PORT, () => {
-  console.log('listening on *:3000');
+  console.log(`NetMon Running on port ${process.env.PORT}`);
 });
