@@ -7,7 +7,8 @@ var BlockSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Server",
         }
-    ]
+    ],
+    darkMode: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model('Block', BlockSchema);

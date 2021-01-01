@@ -3,20 +3,8 @@ const router = express.Router();
 const Ping = require('ping-wrapper');
 const Block = require('../models/Block');
 const Server = require('../models/Server');
+const Alert = require('../models/Alert');
 
-function pinger(server, callback){
-    const ip = server.ip;
-    var sys = require('util')
-    var pinger = require('child_process').exec;
-    function puts(error, stdout, stderr) { 
-        if(stdout.includes('64 bytes')){
-            return callback(stdout);
-        } else {
-            console.log('No Hit')
-        }
-    }
-    pinger(`ping -c 3 ${ip}`, puts);
-}
 
 router.get('/', async (req, res) => {
     Block.find({}).populate('servers').exec(async(err, foundBlocks) => {
@@ -24,8 +12,16 @@ router.get('/', async (req, res) => {
             req.flash('error', 'Block not found. Please try again.');
             res.redirect('back');
         } else {
-            res.render('settings/index', {
-                blocks: foundBlocks
+            Alert.findOne({}, (err, foundAlert) => {
+                if(err){
+                    console.log(err)
+                    res.redirect('back');
+                } else {
+                    res.render('settings/index', {
+                        blocks: foundBlocks,
+                        alert: foundAlert
+                    });
+                }
             });
         }
     });
@@ -68,6 +64,17 @@ router.post('/:id', (req, res) => {
         }
     });
 });
+
+// router.put('/:id/contact', (req, res) => {
+//     Alert.findOne({}, (err, foundAlert) => {
+//         if(err){
+//             req.flash('error', 'Email not added. Please try again.');
+//             res.redirect('back');
+//         } else {
+//             foundAlert.email = req.body.email;
+//         }
+//     });
+// });
 
 router.delete('/:id', (req, res) => {
     Server.findByIdAndDelete(req.params.id, (err) => {

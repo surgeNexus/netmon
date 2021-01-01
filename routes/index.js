@@ -2,22 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Block = require('../models/Block');
 const Server = require('../models/Server');
-
-
-
-function pinger(server, callback){
-    const ip = server.ip;
-    var sys = require('util')
-    var pinger = require('child_process').exec;
-    function puts(error, stdout, stderr) { 
-        if(stdout.includes('64 bytes')){
-            return callback(stdout);
-        } else {
-            console.log('No Hit')
-        }
-    }
-    pinger(`ping -c 3 ${ip}`, puts);
-}
+const moment = require('moment');
 
 async function pinger(){
     Server.find({}, (err, foundServers) => {
@@ -34,6 +19,7 @@ async function pinger(){
                         foundServer.save();
                     } else {
                         foundServer.status = false;
+                        foundServer.updateTime = moment().format('hh:mm:ss A');
                         foundServer.save();
                     }
                 }

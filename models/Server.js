@@ -5,7 +5,7 @@ var ServerSchema = new mongoose.Schema({
     ip: String,
     status: {type: Boolean, default: false},
     order: Number,
-    updateTime: Number
+    updateTime: String
 });
 
 module.exports = mongoose.model('Server', ServerSchema);
