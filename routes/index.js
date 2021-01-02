@@ -16,13 +16,13 @@ async function pinger(){
                 function puts(error, stdout, stderr) { 
                     if(stdout.includes('64 bytes')){
                         if(foundServer.status === false){
-                            foundServer.upTime = moment().format('hh:mm:ss A');
+                            foundServer.upTime = moment().format('MM DD YYYY hh:mm:ss A');
                         }
-                        foundServer.status = true;
+                        foundServer.status = false;
                         foundServer.save();
                     } else {
                         if(foundServer.status === true){
-                            foundServer.downTime = moment().format('hh:mm:ss A');
+                            foundServer.downTime = moment().format('MM DD YYYY hh:mm:ss A');
                         }
                         foundServer.status = false;
                         foundServer.save();
