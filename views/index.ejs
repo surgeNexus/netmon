@@ -36,7 +36,7 @@
                     <img src="/icons/offline.png" class="indicator-img">
                   <% } %>
                 </td>
-                <td><%= server.updateTime %></td>
+                <td><% if(server.status === true) { %><%= server.upTime %><% } else { %><%= server.downTime %><% } %></td>
               </tr>
             <% }) %>
           </tbody>

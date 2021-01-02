@@ -15,12 +15,16 @@ async function pinger(){
                 var pinger = require('child_process').exec;
                 function puts(error, stdout, stderr) { 
                     if(stdout.includes('64 bytes')){
+                        if(foundServer.status === false){
+                            foundServer.upTime = moment().format('hh:mm:ss A');
+                        }
                         foundServer.status = true;
-                        foundServer.updateTime = moment().format('hh:mm:ss A');
                         foundServer.save();
                     } else {
+                        if(foundServer.status === true){
+                            foundServer.downTime = moment().format('hh:mm:ss A');
+                        }
                         foundServer.status = false;
-                        foundServer.updateTime = moment().format('hh:mm:ss A');
                         foundServer.save();
                     }
                 }

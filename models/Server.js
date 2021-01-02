@@ -4,7 +4,8 @@ var ServerSchema = new mongoose.Schema({
     name: String,
     ip: String,
     status: {type: Boolean, default: false},
-    updateTime: String
+    upTime: String,
+    downTime: String,
 });
 
 // module.exports.getStatus = (status,  cb) => {  
