@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const Ping = require('ping-wrapper');
 const Block = require('../models/Block');
 const Server = require('../models/Server');
 const Alert = require('../models/Alert');
