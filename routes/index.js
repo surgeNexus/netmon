@@ -16,6 +16,7 @@ async function pinger(){
                 function puts(error, stdout, stderr) { 
                     if(stdout.includes('64 bytes')){
                         foundServer.status = true;
+                        foundServer.updateTime = moment().format('hh:mm:ss A');
                         foundServer.save();
                     } else {
                         foundServer.status = false;
