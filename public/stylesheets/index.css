@@ -1,6 +1,10 @@
-.dark-mode {
-  color: white !important;
-  background-color: black !important;
+body {
+  color:white;
+  background-color: black;
+}
+
+h2, h3, .card-header {
+  color: black;
 }
 
 .indicator-img {
