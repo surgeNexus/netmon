@@ -86,4 +86,15 @@ router.delete('/:id', (req, res) => {
     });
 });
 
+router.delete('/:id/block', (req, res) => {
+    Block.findByIdAndDelete(req.params.id, (err) => {
+        if(err){
+            req.flash('error', 'Resource not removed. Please try again.');
+            res.redirect('back');
+        } else {
+            res.redirect('/settings');
+        }
+    });
+});
+
 module.exports = router;
