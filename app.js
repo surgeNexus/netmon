@@ -24,7 +24,7 @@ app.set('view engine', 'ejs');
 // app.use('/jquery',express.static(path.join(__dirname+'/node_modules/jquery/dist/')));
 app.use(express.static(__dirname + '/public'));
 app.use(methodOverride('_method'));
-app.use(flash());
+// app.use(flash());
 
 app.use('/', indexRoutes);
 app.use('/settings', settingsRoutes);
