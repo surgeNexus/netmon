@@ -18,13 +18,13 @@ async function pinger(){
                         if(foundServer.status === false){
                             foundServer.upTime = moment().format('MM-DD-YYYY hh:mm:ss A');
                         }
-                        foundServer.status = false;
+                        foundServer.status = true;
                         foundServer.save();
                     } else {
                         if(foundServer.status === true){
                             foundServer.downTime = moment().format('MM-DD-YYYY hh:mm:ss A');
                         }
-                        foundServer.status = true;
+                        foundServer.status = false;
                         foundServer.save();
                     }
                 }
