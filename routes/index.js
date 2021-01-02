@@ -20,6 +20,7 @@ async function pinger(){
                         }
                         foundServer.status = true;
                         if(foundServer.timeUpdated === false){
+                            foundServer.upTime = moment().format('MM-DD-YYYY hh:mm:ss A');
                             foundServer.timeUpdated == true;
                         }
                         foundServer.save();
@@ -29,6 +30,7 @@ async function pinger(){
                         }
                         foundServer.status = false;
                         if(foundServer.timeUpdated === false){
+                            foundServer.upTime = moment().format('MM-DD-YYYY hh:mm:ss A');
                             foundServer.timeUpdated == true;
                         }
                         foundServer.save();
