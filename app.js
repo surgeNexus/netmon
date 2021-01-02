@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-const flash = require('connect-flash');
+// const flash = require('connect-flash');
 // const path = require('path');
 // const $ = require('jquery');
 

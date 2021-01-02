@@ -32,7 +32,7 @@ router.post('/', (req, res) => {
     }
     Block.create(newBlock, (err, block) => {
         if(err){
-            req.flash('error', 'Block not found. Please try again.');
+            console.log(err);
             res.redirect('back');
         } else {
             res.redirect('/settings');
@@ -43,7 +43,7 @@ router.post('/', (req, res) => {
 router.post('/:id', (req, res) => {
     Block.findById(req.params.id, (err, foundBlock) => {
         if(err){
-            req.flash('error', 'Block not found. Please try again.');
+            console.log(err);
             res.redirect('back');
         } else {
             const newServer = {
@@ -52,7 +52,7 @@ router.post('/:id', (req, res) => {
             }
             Server.create(newServer, (err, server) => {
                 if(err){
-                    req.flash('error', 'Server not created. Please try again.');
+                    console.log(err);
                     res.redirect('back');
                 } else {
                     foundBlock.servers.push(server);

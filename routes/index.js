@@ -35,7 +35,7 @@ async function pinger(){
 router.get('/', (req, res) => {
     Block.find({}).populate('servers').exec((err, foundBlocks) => {
         if(err){
-            req.flash('error', 'Block not found. Please try again.');
+            console.log(err);
             res.redirect('back');
         } else {
             Server.find({}, async(err, foundServers) => {
