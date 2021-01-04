@@ -21,6 +21,7 @@
               <th scope="col">Server Name</th>
               <th scope="col">IP Address</th>
               <th scope="col">Status</th>
+              <th scope="col">Latency</th>
               <th scope="col">Since</th>
             </tr>
           </thead>
@@ -36,6 +37,7 @@
                     <img src="/icons/offline.png" class="indicator-img">
                   <% } %>
                 </td>
+                <td><% if(server.status === true) { %><%= server.latency %>ms<% } else { %> N/A <% } %></td>
                 <td><% if(server.status === true) { %><%= server.upTime %><% } else { %><%= server.downTime %><% } %></td>
               </tr>
             <% }) %>

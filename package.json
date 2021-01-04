@@ -17,6 +17,7 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
+    "jjg-ping": "^1.0.3",
     "jquery": "^3.5.1",
     "method-override": "^3.0.0",
     "moment": "^2.29.1",

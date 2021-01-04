@@ -1,39 +1,71 @@
 const express = require('express');
 const router = express.Router();
+const ping = require('jjg-ping');
 const Block = require('../models/Block');
 const Server = require('../models/Server');
 const moment = require('moment');
 
-async function pinger(){
+// async function pingFunc(){
+//     Server.find({}, (err, foundServers) => {
+//         if(err){console.log(err);}
+//         for(let server of foundServers) {
+//             Server.findById(server.id, (err, foundServer) => {
+//                 if(err){console.log(err)}
+//                 const ip = foundServer.ip;
+//                 var sys = require('util')
+//                 var pinger = require('child_process').exec;
+//                 function puts(error, stdout, stderr) { 
+//                     if(stdout.includes('64 bytes')){
+//                         if(foundServer.status === false){
+//                             foundServer.upTime = moment().format('MM-DD-YYYY hh:mm:ss A');
+//                         }
+//                         foundServer.status = true;
+//                         foundServer.save();
+//                     } else {
+//                         if(foundServer.status === true){
+//                             foundServer.downTime = moment().format('MM-DD-YYYY hh:mm:ss A');
+//                         }
+//                         foundServer.status = false;
+//                         foundServer.save();
+//                     }
+//                 }
+//                 pinger(`ping -c 3 ${ip}`, puts);
+//             });
+//         }
+//     });
+//     await new Promise(resolve => setTimeout(resolve, 5000));
+//     pingFunc()
+// }
+
+async function pingFunc(){
     Server.find({}, (err, foundServers) => {
         if(err){console.log(err);}
         for(let server of foundServers) {
             Server.findById(server.id, (err, foundServer) => {
                 if(err){console.log(err)}
                 const ip = foundServer.ip;
-                var sys = require('util')
-                var pinger = require('child_process').exec;
-                function puts(error, stdout, stderr) { 
-                    if(stdout.includes('64 bytes')){
+                ping.system.ping(ip, function(latency, status) {
+                    if (status) {
                         if(foundServer.status === false){
-                            foundServer.upTime = moment().format('MM-DD-YYYY hh:mm:ss A');
-                        }
+                                foundServer.upTime = moment().format('MM-DD-YYYY hh:mm:ss A');
+                            }
                         foundServer.status = true;
+                        foundServer.latency = latency;
                         foundServer.save();
-                    } else {
+                    }
+                    else {
                         if(foundServer.status === true){
                             foundServer.downTime = moment().format('MM-DD-YYYY hh:mm:ss A');
                         }
                         foundServer.status = false;
                         foundServer.save();
                     }
-                }
-                pinger(`ping -c 3 ${ip}`, puts);
+                })
             });
         }
     });
     await new Promise(resolve => setTimeout(resolve, 5000));
-    pinger()
+    pingFunc()
 }
 
 router.get('/', (req, res) => {
@@ -46,7 +78,7 @@ router.get('/', (req, res) => {
                 if(err){
                     console.log(err)
                 } else {
-                    pinger();
+                    pingFunc();
                     res.render('index', {
                         blocks: foundBlocks
                     });

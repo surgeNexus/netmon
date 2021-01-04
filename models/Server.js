@@ -6,7 +6,8 @@ var ServerSchema = new mongoose.Schema({
     status: {type: Boolean, default: false},
     upTime: String,
     downTime: String,
-    timeUpdated: {type: Boolean, default: false}
+    timeUpdated: {type: Boolean, default: false},
+    latency: String
 });
 
 // module.exports.getStatus = (status,  cb) => {  
