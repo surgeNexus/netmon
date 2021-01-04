@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const ping = require('jjg-ping');
+const ping = require('ping');
 const Block = require('../models/Block');
 const Server = require('../models/Server');
 const moment = require('moment');
@@ -44,23 +44,25 @@ async function pingFunc(){
             Server.findById(server.id, (err, foundServer) => {
                 if(err){console.log(err)}
                 const ip = foundServer.ip;
-                ping.system.ping(ip, function(latency, status) {
-                    if (status) {
+                ping.promise.probe(ip, {
+                    timeout: 10,
+                    extra: ['-i', '2'],
+                }).then(function (res) {
+                    if(res.alive === true){
                         if(foundServer.status === false){
-                                foundServer.upTime = moment().format('MM-DD-YYYY hh:mm:ss A');
-                            }
+                            foundServer.upTime = moment().format('MM-DD-YYYY hh:mm:ss A');
+                        }
                         foundServer.status = true;
-                        foundServer.latency = latency;
+                        foundServer.latency = res.time;
                         foundServer.save();
-                    }
-                    else {
+                    } else {
                         if(foundServer.status === true){
                             foundServer.downTime = moment().format('MM-DD-YYYY hh:mm:ss A');
                         }
                         foundServer.status = false;
                         foundServer.save();
                     }
-                })
+                });
             });
         }
     });
